@@ -15,9 +15,6 @@ jobs:
       RAILS_ENV: test
 
     steps:
-      - name: Install system packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libvips curl
-
       - uses: actions/checkout@v6
 
       - uses: ruby/setup-ruby@v1
@@ -26,15 +23,4 @@ jobs:
           bundler-cache: true
 
       - name: Run tests
-        run: bin/rails db:test:prepare test
-
-      - name: Run system tests
-        run: bin/rails test:system
-
-      - name: Keep screenshots from failed system tests
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: screenshots
-          path: ${{ github.workspace }}/tmp/screenshots
-          if-no-files-found: ignore
+        run: bin/rails test

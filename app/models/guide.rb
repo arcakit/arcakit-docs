@@ -73,7 +73,7 @@ class Guide
   end
 
   def body_html
-    @body_html ||= render_markdown
+    @body_html ||= render_markdown.html_safe
   end
 
   def chapters

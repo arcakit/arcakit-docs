@@ -155,11 +155,9 @@
     }
     body.guide hr {
       height: 1.5em;
-      background: url("../images/hr_rails.svg") center no-repeat !important;
+    
     }
     body.guide code, body.guide pre {
       font-size: 9.5pt !important;
     }
   }
-  
-  /*# sourceMappingURL=print.css.map */

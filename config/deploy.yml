@@ -39,6 +39,7 @@ env:
     GITHUB_BRANCH: main
   secret:
     - SECRET_KEY_BASE
+    - GITHUB_WEBHOOK_SECRET
 
 aliases:
   console: app exec -i --reuse -e CONSOLE_USER:<%= ENV["USER"] %> "bin/rails console"

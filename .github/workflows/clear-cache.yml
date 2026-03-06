@@ -1,0 +1,18 @@
+name: Clear content cache
+
+on:
+  workflow_dispatch:
+
+jobs:
+  clear:
+    name: Clear guide cache
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger cache clear
+        run: |
+          PAYLOAD='{}'
+          SIGNATURE="sha256=$(echo -n "$PAYLOAD" | openssl dgst -sha256 -hmac "${{ secrets.GITHUB_WEBHOOK_SECRET }}" | awk '{print $2}')"
+          curl -f -X POST https://guides.arcakit.dev/webhooks/github \
+            -H "Content-Type: application/json" \
+            -H "X-Hub-Signature-256: $SIGNATURE" \
+            -d "$PAYLOAD"

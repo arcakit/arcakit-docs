@@ -325,7 +325,6 @@ body.guide h1 {
   /* 48px */
   font-weight: 700;
   /* Light */
-  line-height: 1em;
   margin-top: 0;
 }
 
@@ -473,7 +472,7 @@ body.guide ol>li {
 body.guide hr {
   height: 1em;
   border: 0;
-  background: url("../images/hr_rails_mobile.svg") center no-repeat;
+
   background-size: contain;
   margin: 1em auto;
   width: 90%;
@@ -482,7 +481,7 @@ body.guide hr {
 @media (min-width: 769px) {
   body.guide hr {
     height: 1.5em;
-    background: url("../images/hr_rails.svg") center no-repeat;
+
   }
 }
 
@@ -1383,13 +1382,13 @@ html[dir=rtl]:lang(iw) body.guide header#page_header nav#feature_nav .header-log
   }
 
   body.guide hr {
-    background: url("../images/hr_rails_white_mobile.svg") center no-repeat;
+    
   }
 }
 
 @media (prefers-color-scheme: dark) and (min-width: 769px) {
   body.guide hr {
-    background: url("../images/hr_rails_white.svg") center no-repeat;
+  
   }
 }
 

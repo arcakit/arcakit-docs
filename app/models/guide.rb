@@ -1,6 +1,8 @@
 class Guide
   require "net/http"
 
+  class NotFound < StandardError; end
+
   CONTENT_PATH = Rails.root.join("app", "content", "guides")
   CACHE_TTL = ENV.fetch("GUIDE_CACHE_TTL", "300").to_i.seconds
 
@@ -88,12 +90,12 @@ class Guide
         branch = self.class.github_branch
         uri = URI("https://raw.githubusercontent.com/#{repo}/#{branch}/app/content/guides/#{@slug}.md")
         response = Net::HTTP.start(uri.host, uri.port, use_ssl: true) { |http| http.get(uri.request_uri) }
-        raise ActiveRecord::RecordNotFound, "Guide not found: #{@slug}" unless response.is_a?(Net::HTTPSuccess)
+        raise Guide::NotFound, "Guide not found: #{@slug}" unless response.is_a?(Net::HTTPSuccess)
         response.body
       end
     else
       path = CONTENT_PATH.join("#{@slug}.md")
-      raise ActiveRecord::RecordNotFound, "Guide not found: #{@slug}" unless path.exist?
+      raise Guide::NotFound, "Guide not found: #{@slug}" unless path.exist?
       path.read
     end
   end

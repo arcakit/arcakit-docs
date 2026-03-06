@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  post "webhooks/github", to: "webhooks#github"
+
   root "guides#index"
   get ":id", to: "guides#show", as: :guide
 end

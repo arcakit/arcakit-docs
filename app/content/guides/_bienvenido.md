@@ -1,7 +1,7 @@
 ---
 title: Bienvenido
 description: Automatiza ARCA en tu software.
-section: Bienvenido
+section: Introduccion
 position: 1
 ---
 

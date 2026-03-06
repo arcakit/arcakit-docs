@@ -10,9 +10,7 @@ registry:
 
 builder:
   dockerfile: Dockerfile
-  arch: 
-    - amd64
-    - arm64
+  arch: amd64
   local: <%= ENV.fetch("KAMAL_BUILDER_LOCAL", "true") %>
 
 retain_containers: 1

@@ -44,17 +44,11 @@ Rails.application.configure do
   config.active_support.report_deprecations = false
 
   # In-memory cache for GitHub API responses (guide content and listing).
-  config.cache_store = :memory_store, { size: 32.megabytes }
+  config.cache_store = :memory_store, { size: 32 * 1024 * 1024 }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
-
-  # Do not dump schema after migrations.
-  config.active_record.dump_schema_after_migration = false
-
-  # Only use :id for inspections in production.
-  config.active_record.attributes_for_inspect = [ :id ]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [

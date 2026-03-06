@@ -12,7 +12,7 @@ WORKDIR /rails
 
 # Install base packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 libvips libssl-dev sqlite3 && \
+    apt-get install --no-install-recommends -y curl libjemalloc2 libvips libssl-dev && \
     ln -s /usr/lib/$(uname -m)-linux-gnu/libjemalloc.so.2 /usr/local/lib/libjemalloc.so && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
@@ -42,14 +42,8 @@ RUN --mount=type=cache,id=arcakit-docs-bundle-${RUBY_VERSION},sharing=locked,tar
     rm -rf "$BUNDLE_PATH"/ruby/*/bundler/gems/*/.git && \
     find "$BUNDLE_PATH" -type f \( -name '*.gem' -o -iname '*.a' -o -iname '*.o' -o -iname '*.h' -o -iname '*.c' -o -iname '*.hpp' -o -iname '*.cpp' \) -delete
 
-# Precompile gemfile bootsnap
-RUN bundle exec bootsnap precompile --gemfile
-
 # Copy application code
 COPY . .
-
-# Precompile bootsnap code for faster boot times
-RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile

@@ -1,0 +1,21 @@
+<% content_for(:title) { "ARCAkit Guides" } %>
+
+<div id="guides-index">
+  <h1>Guías de ARCAkit</h1>
+
+  <p>
+    Estos guías te ayudarán a integrar con las webservices de ARCA/AFIP usando
+    la API REST de ARCAkit.
+  </p>
+
+  <% guides_by_section.each do |section, guides| %>
+    <h2><%= section %></h2>
+
+    <dl>
+      <% guides.each do |guide| %>
+        <dt><%= link_to guide.title, guide_path(guide.slug) %></dt>
+        <dd><%= guide.description %></dd>
+      <% end %>
+    </dl>
+  <% end %>
+</div>

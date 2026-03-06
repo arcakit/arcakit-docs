@@ -1,0 +1,45 @@
+service: arcakit-docs
+image: arcakit/arcakit-docs
+asset_path: /rails/public/assets
+
+volumes:
+  - arcakit-docs:/rails/storage
+
+registry:
+  server: localhost:5555
+
+builder:
+  dockerfile: Dockerfile
+  arch: 
+    - amd64
+    - arm64
+  local: <%= ENV.fetch("KAMAL_BUILDER_LOCAL", "true") %>
+
+retain_containers: 1
+
+servers:
+  web:
+    hosts:
+      - docs.taild33cad.ts.net
+
+proxy:
+  ssl: true
+  hosts:
+    - guides.arcakit.dev
+
+ssh:
+  port: 22
+
+env:
+  clear:
+    RAILS_ENV: production
+    RAILS_LOG_LEVEL: fatal
+    BASE_URL: https://guides.arcakit.dev
+    GITHUB_REPO: arcakit/arcakit-docs
+    GITHUB_BRANCH: main
+  secret:
+    - SECRET_KEY_BASE
+
+aliases:
+  console: app exec -i --reuse -e CONSOLE_USER:<%= ENV["USER"] %> "bin/rails console"
+  ssh: app exec -i --reuse -e CONSOLE_USER:<%= ENV["USER"] %> /bin/bash

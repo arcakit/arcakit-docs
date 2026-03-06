@@ -1,0 +1,37 @@
+<% content_for(:page_title) { "#{@guide.title} — ARCAkit Documentation" } %>
+<% content_for(:meta_description) { @guide.description } %>
+<% content_for(:og_type) { "article" } %>
+
+<% content_for(:header_section) do %>
+  <h2><%= @guide.title %></h2>
+
+  <% if @guide.description.present? %>
+    <p><%= @guide.description %></p>
+  <% end %>
+<% end %>
+
+<% content_for(:chapter_navigation) do %>
+  <nav>
+    <h2 class="chapter">
+      Capítulos
+    </h2>
+
+    <ol class="chapters">
+      <% @guide.chapters.each do |chapter| %>
+        <li>
+          <a href="#<%= chapter[:id] %>"><%= chapter[:title] %></a>
+
+          <% if chapter[:subchapters].present? %>
+            <ol>
+              <% chapter[:subchapters].each do |sub| %>
+                <li><a href="#<%= sub[:id] %>"><%= sub[:title] %></a></li>
+              <% end %>
+            </ol>
+          <% end %>
+        </li>
+      <% end %>
+    </ol>
+  </nav>
+<% end %>
+
+<%= raw @guide.body_html %>

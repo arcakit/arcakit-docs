@@ -1,0 +1,220 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+      <%= content_for?(:page_title) ? yield(:page_title) : "ARCAkit Documentation" %>
+    </title>
+
+    <% _meta_title = content_for?(:page_title) ? strip_tags(yield(:page_title)) : "ARCAkit Documentation" %>
+    <% _meta_description = content_for?(:meta_description) ? strip_tags(yield(:meta_description)) : "" %>
+
+    <meta name="description" content="<%= _meta_description %>">
+
+    <meta
+      property="og:type"
+      content="<%= content_for?(:og_type) ? yield(:og_type) : "website" %>"
+    >
+
+    <meta property="og:title" content="<%= _meta_title %>">
+    <meta property="og:description" content="<%= _meta_description %>">
+    <meta property="og:url" content="<%= request.url %>">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="<%= _meta_title %>">
+    <meta name="twitter:description" content="<%= _meta_description %>">
+
+    <link rel="canonical" href="<%= request.url %>">
+
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+
+    <link rel="icon" href="<%= asset_path 'logo.png' %>" type="image/png">
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="guide no-js">
+    <script>document.body.classList.remove('no-js')</script>
+
+    <a
+      id="main-skip-link"
+      href="#main"
+      class="skip-link"
+      data-turbo="false"
+    >
+      Skip to main content
+    </a>
+
+    <div
+      id="mobile-navigation-bar"
+      data-controller="disclosure"
+      data-disclosure-open-class="visible"
+      data-action="click@document->disclosure#closeOnOutsideClick keydown.esc@document->disclosure#close"
+      class="more-info-container"
+    >
+      <div class="wrapper">
+        <strong class="more-info-label">
+          More at <a href="/">ARCAkit Documentation</a>
+        </strong>
+
+        <button
+          type="button"
+          class="js-only red-button more-info-button"
+          id="more-info"
+          aria-controls="more-info-links"
+          aria-expanded="false"
+          data-disclosure-target="button"
+          data-action="disclosure#toggle"
+        >
+          More
+        </button>
+
+        <ul
+          id="more-info-links"
+          class="more-info-links"
+          data-disclosure-target="panel"
+        >
+          <li class="more-info"><a href="/">Guides</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <header id="page-header">
+      <div class="wrapper clearfix">
+        <nav id="feature-nav">
+          <div class="header-logo">
+            <a href="/" title="Guías de ARCAkit">
+              <%= image_tag "logo.png", alt: "", aria: { hidden: "true" }, width: 40, height: 40 %>
+              Guías de ARCAkit
+            </a>
+          </div>
+
+          <ul class="nav">
+            <li><a class="nav-item" id="home_nav" href="/">Home</a></li>
+
+            <li
+              class="guides-index guides-index-large"
+              data-controller="disclosure"
+              data-disclosure-open-class="visible"
+              data-action="click@document->disclosure#closeOnOutsideClick keydown.esc@document->disclosure#close"
+            >
+              <a
+                href="/"
+                id="guides-menu-button"
+                role="button"
+                aria-controls="guides"
+                aria-expanded="false"
+                class="guides-index-item nav-item"
+                data-disclosure-target="button"
+                data-action="disclosure#toggle"
+              >
+                Índice de Guías
+              </a>
+
+              <div id="guides" class="clearfix" data-disclosure-target="panel">
+                <hr>
+
+                <dl class="guides-section-container">
+                  <% guides_by_section.each do |section, guides| %>
+                    <div class="guides-section">
+                      <dt><%= section %></dt>
+
+                      <% guides.each do |guide| %>
+                        <dd>
+                          <%= link_to guide.title, guide_path(guide.slug), data: { action: "disclosure#close" } %>
+                        </dd>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </dl>
+              </div>
+            </li>
+
+            <li class="guides-index guides-index-small js-only">
+              <label for="guides-selector">Navega a una guía:</label>
+
+              <select
+                id="guides-selector"
+                class="guides-index-item nav-item"
+                data-controller="guides-select"
+                data-action="change->guides-select#navigate"
+              >
+                <option value="/">Índice de Guías</option>
+
+                <% guides_by_section.each do |section, guides| %>
+                  <optgroup label="<%= section %>">
+                    <% guides.each do |guide| %>
+                      <option value="<%= guide_path(guide.slug) %>">
+                        <%= guide.title %>
+                      </option>
+                    <% end %>
+                  </optgroup>
+                <% end %>
+              </select>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <hr class="hide">
+
+    <main id="main">
+      <article data-controller="chapter-navigation">
+        <header id="feature">
+          <div class="wrapper">
+            <%= yield :header_section %>
+            <%= yield :index_section %>
+
+            <% if content_for?(:chapter_navigation) %>
+              <div id="column-side" data-chapter-navigation-target="side">
+                <%= yield :chapter_navigation %>
+              </div>
+            <% end %>
+          </div>
+        </header>
+
+        <div class="wrapper">
+          <div id="column-main" data-chapter-navigation-target="main">
+            <section id="article-body"><%= yield %></section>
+
+            <hr>
+
+            <footer aria-labelledby="heading-feedback" role="region">
+              <h2 id="heading-feedback">Comentarios</h2>
+
+              <p>
+                Te invitamos a ayudarnos a mejorar la calidad de esta guía.
+              </p>
+            </footer>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <hr class="hide">
+
+    <footer id="complementary">
+      <div class="wrapper">
+        <p>Powered by Ruby on Rails</p>
+      </div>
+    </footer>
+
+    <a
+      href="#main-skip-link"
+      class="back-to-top"
+      data-turbo="false"
+      data-controller="back-to-top"
+      data-action="click->back-to-top#scroll scroll@window->back-to-top#show"
+    >
+      <%= image_tag "arrow-up.svg", alt: "", aria: { hidden: "true" }, width: 16, height: 16 %>
+      <span class="visibly-hidden">Back to top</span>
+    </a>
+  </body>
+</html>

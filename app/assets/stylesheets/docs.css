@@ -1,0 +1,274 @@
+/* ARCAkit Documentation Overrides */
+
+/* System font stack — remove all @font-face declarations from style.css */
+body.guide,
+body.guide :root {
+    font-family: system-ui, sans-serif;
+    font-feature-settings: normal;
+}
+
+body.guide h1,
+body.guide h2,
+body.guide h3,
+body.guide h4,
+body.guide h5,
+body.guide h6,
+body.guide header#page-header nav#feature-nav .header-logo a {
+    font-family: system-ui, sans-serif;
+    font-weight: 900;
+}
+
+body.guide pre,
+body.guide code,
+body.guide pre *,
+body.guide code * {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace !important;
+}
+
+/* Your brand color — replace Rails red (#C81418) */
+/* Change this to whatever ARCAkit/ARCAkit Documentation uses */
+:root {
+    --brand: #2563EB;
+    --brand-light: #3B82F6;
+    --brand-dark: #1D4ED8;
+}
+
+body.guide h1 {
+    color: var(--brand);
+}
+
+body.guide h2 a,
+body.guide h2 a:link,
+body.guide h2 a:visited {
+    color: var(--brand);
+}
+
+body.guide a:link {
+    color: var(--brand);
+}
+
+body.guide a:hover,
+body.guide a:active {
+    color: var(--brand-light);
+}
+
+body.guide a:visited {
+    color: var(--brand-dark);
+}
+
+::selection {
+    background: var(--brand);
+    color: white;
+}
+
+::-moz-selection {
+    background: var(--brand);
+    color: white;
+}
+
+/* Header logo — remove the Rails circle SVG background */
+body.guide header#page-header nav#feature-nav .header-logo a {
+    background-image: none;
+    padding-top: 0;
+    padding-left: 0;
+    line-height: 1;
+    color: var(--brand);
+}
+
+@media (min-width: 1025px) {
+    body.guide header#page-header nav#feature-nav .header-logo a {
+        padding: 10px 0 0 0;
+        height: auto;
+    }
+}
+
+/* Back to top button */
+body.guide a.back-to-top {
+    background-color: var(--brand);
+}
+
+/* Mobile nav button */
+body.guide #mobile-navigation-bar .red-button {
+    background: var(--brand);
+    border-bottom-color: var(--brand-dark);
+}
+
+body.guide #mobile-navigation-bar .red-button:active {
+    background: var(--brand-dark);
+}
+
+/* Chapter sidebar active indicator */
+body.guide #feature #column-side ol.chapters li a[href]:not([href=""])::before {
+    background-color: var(--brand);
+}
+
+body.guide #feature #column-side ol.chapters li a[href]:not([href=""])::after {
+    background-color: rgba(37, 99, 235, 0.15);
+}
+
+body.guide #feature #column-side ol.chapters li a:hover,
+body.guide #feature #column-side ol.chapters li a:active {
+    color: var(--brand);
+}
+
+/* Guides dropdown hover */
+body.guide #guides .guides-section-container .guides-section dd a:hover,
+body.guide #guides .guides-section-container .guides-section dd a:active {
+    color: var(--brand) !important;
+}
+
+/* Interstitial boxes — keep as-is or tweak */
+.interstitial.warning {
+    border-color: var(--brand);
+    background-color: rgba(37, 99, 235, 0.15);
+}
+
+/* Dark mode overrides */
+@media (prefers-color-scheme: dark) {
+
+    body.guide a:link,
+    body.guide a:visited {
+        color: var(--brand-light);
+    }
+
+    body.guide a:hover,
+    body.guide a:active {
+        color: var(--brand);
+    }
+
+    body.guide #feature #column-side ol.chapters li a:hover,
+    body.guide #feature #column-side ol.chapters li a:active {
+        color: var(--brand-light);
+    }
+}
+
+/* Theme color meta */
+meta[name="theme-color"] {
+    content: var(--brand);
+}
+
+/* ============================================================
+   Icons — replace Rails guides images with local SVGs
+   via CSS mask-image
+   ============================================================ */
+
+/* Clear background-image icons from interstitial boxes */
+.interstitial.note,
+.interstitial.work-in-progress,
+.interstitial.todo,
+.interstitial.info,
+.interstitial.warning,
+.interstitial.question,
+dl dd .interstitial.note,
+dl dd .interstitial.work-in-progress,
+dl dd .interstitial.todo,
+dl dd .interstitial.info,
+dl dd .interstitial.warning,
+dl dd .interstitial.question {
+  background-image: none;
+  position: relative;
+}
+
+/* Shared pseudo-element base */
+.interstitial.note::before,
+.interstitial.work-in-progress::before,
+.interstitial.todo::before,
+.interstitial.info::before,
+.interstitial.warning::before,
+.interstitial.question::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  width: 30px;
+  height: 30px;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+:where(html[dir=ltr]) .interstitial.note::before,
+:where(html[dir=ltr]) .interstitial.work-in-progress::before,
+:where(html[dir=ltr]) .interstitial.todo::before,
+:where(html[dir=ltr]) .interstitial.info::before,
+:where(html[dir=ltr]) .interstitial.warning::before,
+:where(html[dir=ltr]) .interstitial.question::before { left: 10px; }
+
+:where(html[dir=rtl]) .interstitial.note::before,
+:where(html[dir=rtl]) .interstitial.work-in-progress::before,
+:where(html[dir=rtl]) .interstitial.todo::before,
+:where(html[dir=rtl]) .interstitial.info::before,
+:where(html[dir=rtl]) .interstitial.warning::before,
+:where(html[dir=rtl]) .interstitial.question::before { right: 10px; }
+
+.interstitial.note::before {
+  background-color: #FFD600;
+  mask-image: url("../images/pinned.svg");
+}
+
+.interstitial.work-in-progress::before,
+.interstitial.todo::before {
+  background-color: #FFD600;
+  mask-image: url("../images/gear.svg");
+}
+
+.interstitial.info::before {
+  background-color: #00F0FF;
+  mask-image: url("../images/bolt.svg");
+}
+
+.interstitial.warning::before {
+  background-color: var(--brand);
+  mask-image: url("../images/bell-alert.svg");
+}
+
+.interstitial.question::before {
+  background-color: #A9A9A8;
+  mask-image: url("../images/lifebuoy.svg");
+}
+
+/* Home nav — mask-image replaces both light and dark variants */
+body.guide header#page-header nav#feature-nav ul.nav li a#home_nav {
+  background-image: none;
+  background-color: currentColor;
+  mask-image: url("../images/home.svg");
+  mask-repeat: no-repeat;
+  mask-position: top center;
+  mask-size: 1.5em;
+}
+
+/* Back to top — replace PNG with SVG arrow */
+body.guide a.back-to-top {
+  background-image: none;
+  background-color: var(--brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.guide a.back-to-top::before {
+  content: "";
+  display: block;
+  width: 1em;
+  height: 1em;
+  background-color: white;
+  mask-image: url("../images/arrow-up.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+/* Fix code block styling */
+.interstitial.code pre {
+    background-color: transparent !important;
+    margin: 0;
+    padding: 0.75em 1em;
+    width: 100%;
+}
+
+.interstitial.code pre code {
+    background-color: transparent !important;
+}
+
+.interstitial.code {
+    overflow-x: auto;
+}

@@ -1,0 +1,28 @@
+{
+  "name": "ARCAkit Docs",
+  "runArgs": [
+    "--name",
+    "arcakit-docs"
+  ],
+  "image": "ghcr.io/rails/devcontainer/images/ruby:4.0.1",
+  "workspaceFolder": "/rails",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/rails,type=bind,consistency=cached",
+  "containerEnv": {
+    "RAILS_ENV": "development",
+    "BUNDLE_WITHOUT": "",
+    "BUNDLE_DEPLOYMENT": "0"
+  },
+  "remoteEnv": {
+    "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}"
+  },
+  "postCreateCommand": "bin/devcontainer",
+  "forwardPorts": [3000],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Shopify.ruby-lsp",
+        "anthropic.claude-code"
+      ]
+    }
+  }
+}

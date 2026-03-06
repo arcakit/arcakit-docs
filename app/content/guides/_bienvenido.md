@@ -10,9 +10,9 @@ _Hay una forma mejor._
 
 ARCAkit es la API que automatiza ARCA en tu software. Facturación electrónica, constancias de inscripción, padrón y más, todo accesible desde un único endpoint REST. Sin código de integración propio, sin certificados que gestionar a mano, sin mantenimiento.
 
-### Construida para equipos que necesitan conectar ARCA rápido, y para plataformas que operan en nombre de múltiples contribuyentes.
+**Construida para equipos que necesitan conectar ARCA rápido, y para plataformas que operan en nombre de múltiples contribuyentes.**
 
 ---
 
-### Construido por devs que tuvieron que integrar ARCA en producción.
+**Construido por devs que tuvieron que integrar ARCA en producción.**
 El equipo de ARCAkit support@arcakit.dev

@@ -31,7 +31,7 @@ ssh:
 env:
   clear:
     RAILS_ENV: production
-    RAILS_LOG_LEVEL: fatal
+    RAILS_LOG_LEVEL: info
     BASE_URL: https://guides.arcakit.dev
     GITHUB_REPO: arcakit/arcakit-docs
     GITHUB_BRANCH: main

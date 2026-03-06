@@ -91,7 +91,7 @@ class Guide
         uri = URI("https://raw.githubusercontent.com/#{repo}/#{branch}/app/content/guides/#{@slug}.md")
         response = Net::HTTP.start(uri.host, uri.port, use_ssl: true) { |http| http.get(uri.request_uri) }
         raise Guide::NotFound, "Guide not found: #{@slug}" unless response.is_a?(Net::HTTPSuccess)
-        response.body
+        response.body.force_encoding(Encoding::UTF_8)
       end
     else
       path = CONTENT_PATH.join("#{@slug}.md")
